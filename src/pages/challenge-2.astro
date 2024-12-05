@@ -6,12 +6,13 @@
     <title>Challenge 2</title>
   </head>
   <body>
-    <h1>Challenge 2</h1>
-    <label class="switch">
-      <input type="checkbox" />
-      <div class="slider">
-        <span class="slider__thumb">
-          <div class="checkmark">
+    <h1>Challenge 2 (with Accessibility)</h1>
+    <label class="toggle" for="uniqueID">
+      <input type="checkbox" id="uniqueID" />
+      <span class="toggle-track">
+        <span class="toggle-indicator">
+          <!-- Check mark icon-->
+          <span class="checkmark">
             <svg
               width="61"
               height="45"
@@ -24,76 +25,85 @@
                 d="M48.7498 2.28142C51.3913 -0.359957 55.6739 -0.359921 58.3153 2.28153C60.7556 4.72181 60.9404 8.55699 58.8749 11.2134L58.8041 11.3044L58.3963 11.7663L27.5701 42.5925C25.1298 45.0327 21.2946 45.2175 18.6382 43.152L18.5472 43.0812L18.0853 42.6734L2.63175 27.2198C-0.00973761 24.5784 -0.00973773 20.2957 2.63175 17.6542C5.07203 15.2139 8.9072 15.0291 11.5636 17.0946L11.6546 17.1654L12.1164 17.5731L22.7871 28.2419L48.7498 2.28142C48.7498 2.28138 48.7497 2.28146 48.7498 2.28142Z"
                 fill="#00FF94"></path>
             </svg>
-          </div>
+          </span>
         </span>
-      </div>
+      </span>
+      Toggle label
     </label>
   </body>
 </html>
 
 <style>
-  .switch {
+  .toggle {
     --thumb-size: 48px;
     --checkmark-size: calc(var(--thumb-size) * 0.6);
     --padding: 6px;
     --width: 120px;
     --height: calc(var(--thumb-size) + 2 * var(--padding));
-    --padding: 6px;
 
-    display: inline-block;
+    --track-background: #7d7d7d;
+  }
+
+  .toggle {
+    display: flex;
+    align-items: center;
   }
 
   input {
-    appearance: none;
-  }
-
-  .slider {
-    width: var(--width);
-    height: var(--height);
-    background-color: #7d7d7d;
-    border-radius: 29px;
-    position: relative;
-    transition: background 0.3s ease;
-  }
-
-  .slider__thumb {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
     position: absolute;
-    top: 50%;
-    left: var(--padding);
-    transform: translateY(-50%);
-    width: var(--thumb-size);
-    height: var(--thumb-size);
-    background-color: #000000;
-    border-radius: 50%;
-    transition: transform 0.3s cubic-bezier(1, 0.38, 0.27, 1);
+    left: -9999px;
+    white-space: nowrap;
 
-    .checkmark {
-      width: 100%;
-      height: 100%;
-      position: relative;
-
-      svg {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: var(--checkmark-size);
-        height: var(--checkmark-size);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
+    &:not([disabled]):active + .toggle-track,
+    &:not([disabled]):focus + .toggle-track {
+      outline: 2px solid #000;
+    }
+    &:disabled + .toggle-track {
+      cursor: not-allowed;
+      opacity: 0.7;
     }
   }
 
-  input:checked + .slider {
-    background: #02ff94;
+  .toggle-track {
+    background-color: var(--track-background);
+    width: var(--width);
+    height: var(--height);
+    margin-right: 12px;
+    border-radius: calc(var(--height) / 2);
+    position: relative;
   }
 
-  input:checked + .slider .slider__thumb {
-    transform: translateX(calc(var(--width) - var(--height))) translateY(-50%);
+  .toggle-indicator {
+    display: inline-flex;
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: var(--padding);
+    left: var(--padding);
+    transition: 0.3s;
   }
 
-  input:checked + .slider .checkmark svg {
-    opacity: 1;
-  } 
+  .checkmark {
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    width: var(--checkmark-size);
+    height: var(--checkmark-size);
+  }
+
+  input:checked + .toggle-track .toggle-indicator {
+    translate: calc(var(--width) - var(--height)) 0;
+    .checkmark {
+      opacity: 1;
+    }
+  }
 </style>
