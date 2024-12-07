@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Challenge 3</title>
+  </head>
+  <body>
+    <h1>Challenge 3</h1>
+    <span class="text">
+      My Text
+      <span class="tooltip">My Tooltip</span>
+    </span>
+  </body>
+</html>
+
+<style>
+  .text {
+    position: relative;
+  }
+  .text:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  .tooltip {
+    position: absolute;
+    translate: -50% -100%;
+    white-space: nowrap;
+    top: 0;
+    left: 50%;
+    visibility: hidden;
+    opacity: 0;
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: -8px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+    rotate: -45deg;
+    background-color: #000;
+  }
+</style>
